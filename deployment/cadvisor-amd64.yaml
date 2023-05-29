@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cadvisornic
+  namespace: kube-system
+  labels:
+    k8s-app: cadvisornic-monitoring
+spec:
+  selector:
+    matchLabels:
+      name: cadvisornic
+  template:
+    metadata:
+      labels:
+        name: cadvisornic
+    spec:
+      tolerations:
+      - key: node-role.kebernetes.io/master
+        effect: NoSchedule
+      containers:
+        - name: cadvisornic
+          image: gcr.io/cadvisor/cadvisor-amd64:v0.47.0
+          volumeMounts:
+            - name: rootfs
+              mountPath: /rootfs
+              readOnly: true
+            - name: var-run
+              mountPath: /var/run
+              readOnly: false
+            - name: sys
+              mountPath: /sys
+              readOnly: true
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          args:
+            - --profiling
+            - --housekeeping_interval=1s
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: rootfs
+        hostPath:
+          path: /
+      - name: var-run
+        hostPath:
+          path: /var/run
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: docker
+        hostPath:
+          path: /var/lib/docker
+ 
+    
