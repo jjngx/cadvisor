@@ -38,7 +38,7 @@ spec:
       - image: gcr.io/cadvisor/cadvisor-arm64:v0.47.0
         name: cadvisor
         ports:
-        - containerPort: 8080
+        - containerPort: 8085
           name: http
           protocol: TCP
         resources:
