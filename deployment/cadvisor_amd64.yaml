@@ -61,12 +61,12 @@ spec:
         - mountPath: /var/lib/docker
           name: docker
           readOnly: true
-        - mountPath: /dev/disk
-          name: disk
-          readOnly: true
-        args:
-          - --profiling
-          - --housekeeping_interval=1s
+        #- mountPath: /dev/disk
+        #  name: disk
+        #  readOnly: true
+        #args:
+        #  - --profiling
+        # - --housekeeping_interval=1s
       serviceAccountName: cadvisor
       terminationGracePeriodSeconds: 30
       volumes:
