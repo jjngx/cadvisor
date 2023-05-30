@@ -64,6 +64,9 @@ spec:
         - mountPath: /dev/disk
           name: disk
           readOnly: true
+        args:
+          - --profiling
+          - --housekeeping_interval=1s
       serviceAccountName: cadvisor
       terminationGracePeriodSeconds: 30
       volumes:
